@@ -27,7 +27,7 @@ class EventRequest extends FormRequest
             'name' => ['required', 'string', 'max:15'],
             'description' => ['required', 'string'],
             'location' => ['nullable', 'string', 'max:255'],
-            'date' => ['required', 'date'],
+            'date' => ['required', 'date', 'after_or_equal:today'],
             'hour' => ['required', 'date_format:H:i'],
             'tags' => ['nullable', 'string', 'regex:/^([a-zA-Z0-9]+,?)+$/'],
 
@@ -51,6 +51,7 @@ class EventRequest extends FormRequest
             'location.max' => 'El campo localización no puede tener más de 255 caracteres.',
             'date.required' => 'El campo fecha es obligatorio.',
             'date.date' => 'El campo fecha debe ser una fecha.',
+            'date.after_or_equal' => 'El campo fecha debe ser una fecha posterior o igual a hoy.',
             'hour.required' => 'El campo hora es obligatorio.',
             'hour.date_format' => 'El campo hora debe tener el formato HH:MM.',
             'tags.string' => 'El campo etiquetas debe ser un texto.',

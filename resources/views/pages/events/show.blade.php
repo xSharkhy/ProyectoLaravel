@@ -3,7 +3,7 @@
 @section('title', $event->name)
 
 @section('content')
-	<div class="my-12 overflow-hidden bg-white shadow sm:rounded-lg">
+	<div class="my-20 overflow-hidden bg-white shadow sm:rounded-lg">
 		<div class="block px-4 py-5 sm:px-6 md:grid md:grid-cols-3 md:gap-4">
 			<div class="self-center">
 				<h3 class="text-lg font-medium leading-6 text-teal-900">Información del evento</h3>
@@ -77,7 +77,20 @@
 					<dt class="text-sm font-medium text-teal-500">Descripción del Evento</dt>
 					<dd class="mt-1 text-sm text-teal-900 sm:col-span-2 sm:mt-0">{{ $event->description }}</dd>
 				</div>
-
+				{{-- asistentes --}}
+				<div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+					<dt class="text-sm font-medium text-teal-500">Asistentes</dt>
+					<dd class="text-md mt-1 text-teal-900 sm:col-span-2 sm:mt-0">
+						@foreach ($event->users as $user)
+							<a href="{{ route('users.show', $user) }}" class="text-teal-600 hover:text-teal-900 hover:underline">
+								{{ $user->name }}
+							</a>
+							@if (!$loop->last)
+								,
+							@endif
+						@endforeach
+					</dd>
+				</div>
 			</dl>
 		</div>
 	</div>

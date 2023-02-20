@@ -141,12 +141,12 @@ class EventController extends Controller
      */
     public function toggleJoin(Event $event)
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $event->users()->toggle($user);
-            $message = $event->users->contains($user) ? 'Te has unido al evento correctamente' : 'Has abandonado el evento correctamente';
-            return redirect()->route('events.index')->with('success', $message);
-        }
-        return redirect()->route('login');
+        if (!Auth::check()) return redirect()->route('login');
+        if ($event->visible == 0 && Auth::user()->rol != 'admin') return redirect()->route('landing');
+
+        $user = Auth::user();
+        $event->users()->toggle($user);
+        $message = $event->users->contains($user) ? 'Te has unido al evento correctamente' : 'Has abandonado el evento correctamente';
+        return redirect()->route('events.index')->with('success', $message);
     }
 }

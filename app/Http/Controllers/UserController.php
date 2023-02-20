@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\RegisterRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -51,20 +51,20 @@ class UserController extends Controller
     /**
      * Procesa el formulario de edición de usuario y actualiza los datos del usuario en la base de datos.
      *
-     * @param \App\Http\Requests\RegisterRequest $request La solicitud HTTP que contiene los datos de registro del usuario.
+     * @param \App\Http\Requests\Request $request La solicitud HTTP que contiene los datos de registro del usuario.
      * @param \App\Models\User $user El usuario que se va a editar.
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(RegisterRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
         if (Auth::user()->id != $user->id) return redirect()->route('users.index');
 
         if ($request->get('password') != null) $user->password = Hash::make($request->password);
-        if ($request->get('birthday') != null) $user->birthday = $request->get('birthday');
+        if ($request->get('birthday') != null) $user->birthday = $request->birthday;
 
-        $user->twitch = $request->get('twitch');
-        $user->twitch = $request->get('twitter');
-        $user->twitch = $request->get('instagram');
+        $user->twitch = $request->twitch;
+        $user->twitter = $request->twitter;
+        $user->instagram = $request->instagram;
 
         $user->save();
 
